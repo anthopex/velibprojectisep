@@ -1,8 +1,8 @@
 package database;
 
-public class Stations {
-    private int nb;
-    private float lat, lng;
+public class Stations extends Main {
+    protected int nb;
+    protected float lat, lng;
 
     public Stations(int nb, float lat, float lng) {
         this.nb = nb;
