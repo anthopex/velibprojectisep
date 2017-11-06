@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Main {
 
@@ -35,10 +36,12 @@ public class Main {
     }
 
     public static ArrayList<Stations> get() throws Exception{
+
+        Stations stations = null;
         try {
             Connection con = getConnection();
-            PreparedStatement statement = con.prepareStatement("SELECT nb,lat,lng FROM stations");
 
+            PreparedStatement statement = con.prepareStatement("SELECT nb,lat,lng FROM stations");
             ResultSet rs = statement.executeQuery();
 
             ArrayList Resultat = new ArrayList();
@@ -47,10 +50,21 @@ public class Main {
                 Resultat.add(rs.getInt("nb"));
                 Resultat.add(rs.getFloat("lat"));
                 Resultat.add(rs.getFloat("lng"));
+
+                stations = new Stations(rs.getInt("nb"), rs.getFloat("lat"), rs.getFloat("lng"));
+                Resultat.add(stations);
             }
 
             System.out.println("All records have been selected !");
 
+            System.out.print("List of stations : ");
+            Iterator itr = Resultat.iterator();
+
+            while(itr.hasNext()) {
+                Object element = itr.next();
+                System.out.print(element + " ");
+            }
+            System.out.println();
 
         } catch(Exception e){System.out.println(e);}
         return null;
@@ -73,23 +87,3 @@ public class Main {
 
 }
 
-
-
-
-
-
-/* Stations stations = new Stations(rs.getInt("nb"), rs.getFloat("lat"), rs.getFloat("lng"));
-                Resultat.add(stations); */
-
-                /* System.out.print(rs.getInt("nb")+"\t");
-                System.out.print(rs.getFloat("lat")+"\t");
-                System.out.print(rs.getFloat("lng")+"\t"); */
-
-           /* System.out.print("List of stations : ");
-            Iterator itr = Resultat.iterator();
-
-            while(itr.hasNext()) {
-                float element = (float) itr.next();
-                System.out.print(element + " ");
-            }
-            System.out.println(); */
