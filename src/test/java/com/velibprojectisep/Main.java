@@ -6,19 +6,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.lang.Math.*;
 
 public class Main {
+
+    static ArrayList<Stations> stations = new ArrayList<>();
 
     public static void main(String [] args) throws Exception {
         getConnection();
         get();
-
-    }
+}
 
     public static Connection getConnection() throws Exception {
         try {
             String driver = "com.mysql.jdbc.Driver";
-            String url = "jdbc:mysql://localhost/velibtest";
+            String url = "jdbc:mysql://localhost/velibprojectisep";
             String username = "root";
             String password = "password";
             Class.forName(driver);
@@ -31,59 +33,35 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e);
         }
-
         return null;
     }
 
     public static ArrayList<Stations> get() throws Exception{
-
-        Stations stations = null;
         try {
             Connection con = getConnection();
 
-            PreparedStatement statement = con.prepareStatement("SELECT nb,lat,lng FROM stations");
+            PreparedStatement statement = con.prepareStatement("SELECT id,lat,lng FROM stationsadresses");
             ResultSet rs = statement.executeQuery();
 
-            ArrayList Resultat = new ArrayList();
-
             while(rs.next()){
-                Resultat.add(rs.getInt("nb"));
-                Resultat.add(rs.getFloat("lat"));
-                Resultat.add(rs.getFloat("lng"));
+                int id = rs.getInt("id");
+                double lat = rs.getDouble("lat");
+                double lng = rs.getDouble("lng");
 
-                stations = new Stations(rs.getInt("nb"), rs.getFloat("lat"), rs.getFloat("lng"));
-                Resultat.add(stations);
+                Stations station = new Stations();
+                station.setId(id);
+                station.setLatitude(lat);
+                station.setLongitude(lng);
+
+                stations.add(station);
             }
-
-            System.out.println("All records have been selected !");
-
-            System.out.print("List of stations : ");
-            Iterator itr = Resultat.iterator();
-
-            while(itr.hasNext()) {
-                Object element = itr.next();
-                System.out.print(element + " ");
-            }
-            System.out.println();
+            System.out.println("All stations have been selected !");
 
         } catch(Exception e){System.out.println(e);}
-        return null;
+        return stations;
     }
 
-
-    public double convertRad(double degre) { return (Math.PI * degre)/180;}
-
-
-
-    /* public double DistanceTo(double latA, double lonA) {
-        double R = 6378000; // Rayon de la terre en Mètres
-        latA = convertRad(latA);
-        lonA = convertRad(lonA);
-        double latB = convertRad(latitude);
-        double lonB = convertRad(longitude);
-        double d = R * (Math.PI/2 - asin( sin(latB) * sin(latA) + cos(lonB - lonA) * cos(latB) * cos(latA)));
-        return d;
-    } */
-
+    public void trouverVoisin(Stations stationb) {
+        // JE SAIS PLUS QUOI METTRE ICI POUR LUTILISER DANS LE MAIN
+    }
 }
-
