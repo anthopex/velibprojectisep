@@ -1,4 +1,4 @@
-package database;
+package com.velibprojectisep;
 
 public class Stations extends Main {
     protected int nb;
