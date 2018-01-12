@@ -325,9 +325,6 @@ public class City {
         places.add(new KnownPlace("Gare de l'Est", 2.3592853000000105, 48.876779));
         places.add(new KnownPlace("Gare d'Austerlitz", 2.3661160000000336, 48.841748));
 
-        places.add(new KnownPlace("Amalric", 2.3788396999999577, 48.8486572));
-        places.add(new KnownPlace("Victor", 2.2851018000000067, 48.8831633));
-
 
 
     }
